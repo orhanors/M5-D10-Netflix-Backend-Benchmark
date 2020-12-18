@@ -17,16 +17,17 @@ const mongo_uri = process.env.MONGO_URI;
 
 const whitelist = process.env.CORS_WHITELIST;
 
-const corsOptions = {
-	origin: function (origin, callback) {
-		if (whitelist.indexOf(origin) !== -1) {
-			callback(null, true);
-		} else {
-			callback(new Error("Not allowed by CORS"));
-		}
-	},
-};
+// const corsOptions = {
+// 	origin: function (origin, callback) {
+// 		if (whitelist.indexOf(origin) !== -1) {
+// 			callback(null, true);
+// 		} else {
+// 			callback(new Error("Not allowed by CORS"));
+// 		}
+// 	},
+// };
 
+server.use(cors());
 //DATABASE CONNECTION
 mongoose
 	.connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true })

@@ -195,7 +195,7 @@ mediaRoute.post("/mail/sendCatalogue", async (req, res, next) => {
 		} else {
 			const response = await axios.get(url + req.query.title);
 			const data = await response.data;
-			sendEmail(req.query.email, data);
+			sendEmail(req.query.email, JSON.stringify(data));
 
 			res.status(200).send("Mail Sent");
 		}
