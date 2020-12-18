@@ -36,7 +36,7 @@ mongoose
 
 //MIDDLEWARES
 server.use(express.json());
-server.use(cors(corsOptions));
+//server.use(cors(corsOptions));
 //ROUTES
 server.use("/media", mediaRoute);
 server.use("/media", reviewRoute);
