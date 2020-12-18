@@ -184,7 +184,7 @@ const sendEmail = async (toEmail, body) => {
 	}
 };
 
-mediaRoute.post("/mail/sendCatalogue", async (req, res, next) => {
+mediaRoute.post("/send/mail/sendCatalogue", async (req, res, next) => {
 	try {
 		const url = `https://www.omdbapi.com/?apikey=${process.env.OMDB_API_KEY}&s=`;
 
