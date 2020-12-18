@@ -11,6 +11,7 @@
 	"author": "Orhan Örs <orsorhan1@gmail.com>",
 	"license": "MIT",
 	"dependencies": {
+		"@sendgrid/mail": "^7.4.0",
 		"axios": "^0.21.0",
 		"cloudinary": "^1.23.0",
 		"cors": "^2.8.5",

@@ -12,6 +12,7 @@ const { response } = require("express");
 const fs = require("fs");
 const path = require("path");
 const PDFDocument = require("pdfkit");
+const sgMail = require("@sendgrid/mail");
 
 const mediaRoute = express.Router();
 /**
@@ -155,6 +156,49 @@ mediaRoute.post("/", async (req, res, next) => {
 mediaRoute.delete("/:movieId", async (req, res, next) => {
 	try {
 		const result = await Media.findByIdAndRemove(req.params.movieId);
+	} catch (error) {
+		console.log(error);
+		next(error);
+	}
+});
+
+const sendEmail = async (toEmail, body) => {
+	try {
+		console.log("stuffs working....");
+		sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+		const msg = {
+			to: toEmail,
+			from: "orsorhan1@gmail.com",
+			subject: "Strive sendgrid e-mail",
+			text: "Your catoluge movie",
+
+			html: `<p>${body}</p>`,
+		};
+
+		const result = await sgMail.send(msg);
+
+		console.log("sendgrid result is ", result);
+	} catch (error) {
+		console.log("Email error is", error);
+	}
+};
+
+mediaRoute.post("/mail/sendCatalogue", async (req, res, next) => {
+	try {
+		const url = `https://www.omdbapi.com/?apikey=${process.env.OMDB_API_KEY}&s=`;
+
+		if (!req.query.title) {
+			res.status(400).send(
+				"Response should contain title query parameter"
+			);
+		} else {
+			const response = await axios.get(url + req.query.title);
+			const data = await response.data;
+			sendEmail(req.query.email, data);
+
+			res.status(200).send("Mail Sent");
+		}
 	} catch (error) {
 		console.log(error);
 		next(error);
