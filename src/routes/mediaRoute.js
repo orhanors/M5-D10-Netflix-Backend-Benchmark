@@ -152,4 +152,12 @@ mediaRoute.post("/", async (req, res, next) => {
 	}
 });
 
+mediaRoute.delete("/:movieId", async (req, res, next) => {
+	try {
+		const result = await Media.findByIdAndRemove(req.params.movieId);
+	} catch (error) {
+		console.log(error);
+		next(error);
+	}
+});
 module.exports = mediaRoute;
